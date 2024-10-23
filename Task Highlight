@@ -1,0 +1,21 @@
+// This component is strictly for visuals, and the logic below allows
+// us to have our completed tasks displayed as being highlighted in blue 
+// to show that they are different from the incomplete ones.
+
+<template>
+  <div>
+    <span :class="{ completed: task.completed }">{{ task.title }}</span>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ['task'],
+};
+</script>
+
+<style scoped>
+.completed {
+  color: blue;
+}
+</style>
