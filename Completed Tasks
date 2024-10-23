@@ -1,0 +1,27 @@
+// This extra component should essentially be able to dynamically process which tasks
+// have been completed and filter them accordingly.
+
+<template>
+  <div>
+    <h2>Completed Tasks</h2>
+    <TaskList :tasks="completedTasks" @update-task="$emit('update-task', $event)" @delete-task="$emit('delete-task', $event)" />
+  </div>
+</template>
+
+<script>
+import TaskList from './TaskList.vue';
+
+export default {
+  components: { TaskList },
+  props: ['tasks'],
+  computed: {
+    completedTasks() {
+      return this.tasks.filter(task => task.completed);
+    },
+  },
+};
+</script>
+
+<style scoped>
+/* Add styles as needed */
+</style>
