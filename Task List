@@ -1,0 +1,38 @@
+// From this component, we can send the information up the the parent directory
+// and essentially add or delete tasks, plus giving the user a notification
+// if there are no tasks to display at that time.
+
+<template>
+  <div>
+    <h2>All Tasks</h2>
+    <div v-if="tasks.length === 0">No tasks available.</div>
+    <TaskItem
+      v-for="task in tasks"
+      :key="task.id"
+      :task="task"
+      @update-task="updateTask"
+      @delete-task="deleteTask"
+    />
+  </div>
+</template>
+
+<script>
+import TaskItem from './TaskItem.vue';
+
+export default {
+  components: { TaskItem },
+  props: ['tasks'],
+  methods: {
+    updateTask(updatedTask) {
+      this.$emit('update-task', updatedTask);
+    },
+    deleteTask(id) {
+      this.$emit('delete-task', id);
+    },
+  },
+};
+</script>
+
+<style scoped>
+/* Add styles as needed */
+</style>
