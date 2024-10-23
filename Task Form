@@ -1,0 +1,38 @@
+// Here we can add new tasks into our page with the logic below, as it is able to communicate
+// with the parent directory.
+
+<template>
+  <form @submit.prevent="submitForm">
+    <input type="text" v-model="taskDescription" placeholder="Enter a task description" required />
+    <input type="text" v-model="taskDetails" placeholder="Enter the task's details" />
+    <button type="submit">Add Task</button>
+  </form>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      taskDescription: '',
+      taskDetails: '', // New data property for task details
+    };
+  },
+  methods: {
+    submitForm() {
+      const newTask = {
+        id: Date.now(), // Use timestamp as unique ID
+        description: this.taskDescription,
+        details: this.taskDetails, // Add details to the new task object
+        completed: false,
+      };
+      this.$emit('add-task', newTask);
+      this.taskDescription = ''; // Clear input after submission
+      this.taskDetails = ''; // Clear details input after submission
+    },
+  },
+};
+</script>
+
+<style scoped>
+/* Add styles as needed */
+</style>
