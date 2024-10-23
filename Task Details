@@ -1,0 +1,16 @@
+// This small component also gives the user updates on the status of the
+// progress of their tasks and their respective completion.
+
+<template>
+  <div v-if="task">
+    <h2>Task Details</h2>
+    <p>Title: {{ task.title }}</p>
+    <p>Status: {{ task.completed ? 'Completed' : 'Not completed' }}</p>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ['task']
+};
+</script>
