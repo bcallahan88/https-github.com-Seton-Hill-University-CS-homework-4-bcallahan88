@@ -1,0 +1,27 @@
+// This other component is the opposite of our 'completed' one, as it dynamically
+// processes and filters only the tasks that have yet to be completed.
+
+<template>
+  <div>
+    <h2>Incomplete Tasks</h2>
+    <TaskList :tasks="incompleteTasks" @update-task="$emit('update-task', $event)" @delete-task="$emit('delete-task', $event)" />
+  </div>
+</template>
+
+<script>
+import TaskList from './TaskList.vue';
+
+export default {
+  components: { TaskList },
+  props: ['tasks'],
+  computed: {
+    incompleteTasks() {
+      return this.tasks.filter(task => !task.completed);
+    },
+  },
+};
+</script>
+
+<style scoped>
+/* Add styles as needed */
+</style>
