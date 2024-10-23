@@ -1,0 +1,38 @@
+<template>
+  <div :class="{ completed: task.completed }">
+    <input
+      type="checkbox"
+      :checked="task.completed"
+      @change="toggleCompletion"
+    />
+    <strong>
+      <slot name="description">{{ task.description }}</slot>
+    </strong>
+    <div v-if="task.details">
+      <slot>{{ task.details }}</slot>
+    </div>
+    <button @click="deleteTask">Delete</button>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ['task'],
+  methods: {
+    toggleCompletion() {
+      const updatedTask = { ...this.task, completed: !this.task.completed };
+      this.$emit('update-task', updatedTask);
+    },
+    deleteTask() {
+      this.$emit('delete-task', this.task.id);
+    },
+  },
+};
+</script>
+
+<style scoped>
+.completed {
+  color: blue; /* Change text color to blue for completed tasks */
+  text-decoration: line-through; /* Optional: Add strikethrough for better visibility */
+}
+</style>
