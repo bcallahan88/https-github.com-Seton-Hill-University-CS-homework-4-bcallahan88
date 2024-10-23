@@ -1,0 +1,15 @@
+// The purpose of this simple component is to display our progress bar so that
+// the user knows how many tasks have been completed and can view that as a visual.
+
+<template>
+  <div>
+    <h3>Progress: {{ completedTasks }} / {{ totalTasks }} completed</h3>
+    <progress :value="completedTasks" :max="totalTasks"></progress>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ['completedTasks', 'totalTasks']
+};
+</script>
