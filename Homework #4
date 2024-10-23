@@ -1,0 +1,70 @@
+// This is our main section of the code that can essentially communicate with the child components.
+// This is also how we can display the components and tie it all together for the user.
+
+<template>
+  <div id="app">
+    <h1>Task Manager - Homework #4</h1> <!-- Updated Title -->
+    <TaskForm @add-task="addTask" />
+    <TaskProgress :completedTasks="completedTasks" :totalTasks="tasks.length" title="Overall Progress" /> <!-- Updated Progress Title -->
+    
+    <div>
+      <button @click="currentView = 'incomplete'">Show Incomplete Tasks</button>
+      <button @click="currentView = 'completed'">Show Completed Tasks</button>
+    </div>
+    
+    <component :is="currentViewComponent" :tasks="tasks" @update-task="updateTask" @delete-task="deleteTask" />
+    
+    <TaskDetails :task="selectedTask" v-if="selectedTask" />
+  </div>
+</template>
+
+<script>
+import TaskForm from './components/TaskForm.vue';
+import TaskProgress from './components/TaskProgress.vue';
+import TaskDetails from './components/TaskDetails.vue';
+import IncompleteTasks from './components/IncompleteTasks.vue';
+import CompletedTasks from './components/CompletedTasks.vue';
+
+export default {
+  components: {
+    TaskForm,
+    TaskProgress,
+    TaskDetails,
+    IncompleteTasks,
+    CompletedTasks,
+  },
+  data() {
+    return {
+      tasks: [],
+      selectedTask: null,
+      currentView: 'incomplete', // Set initial view to incomplete tasks
+    };
+  },
+  computed: {
+    completedTasks() {
+      return this.tasks.filter(task => task.completed).length;
+    },
+    currentViewComponent() {
+      return this.currentView === 'incomplete' ? 'IncompleteTasks' : 'CompletedTasks';
+    },
+  },
+  methods: {
+    addTask(newTask) {
+      this.tasks.push(newTask);
+    },
+    updateTask(updatedTask) {
+      const index = this.tasks.findIndex(task => task.id === updatedTask.id);
+      if (index !== -1) {
+        this.tasks.splice(index, 1, updatedTask);
+      }
+    },
+    deleteTask(id) {
+      this.tasks = this.tasks.filter(task => task.id !== id);
+    },
+  },
+};
+</script>
+
+<style>
+/* Add some basic styling here */
+</style>
